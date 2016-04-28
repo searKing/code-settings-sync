@@ -1,0 +1,101 @@
+{
+  // 插件名，必须全小写
+  "name": "code-settings-sync",
+  // 应用市场中的插件名
+  "displayName": "Visual Studio Code Settings Sync",
+  // 插件功能描述
+  "description": "Synchronize Settings, Snippets, launch, keybindings files and extensions Across Multiple Machines using Github GIST.",
+  // 插件版本 SemVer ： MAJOR.MINOR.PATCH
+  "version": "1.1.7",
+  // 应用市场中的插件图片
+  "icon": "images/cloud.png",
+  // 应用市场上传发布者
+  "publisher": "Shan",
+  // 插件开发作者
+  "author": {
+    "name": "Shan Khan",
+    "url": "http://shanalikhan.github.io"
+  },
+  // 插件图标的背景主题
+  "galleryBanner": {
+    "color": "#3B4859",
+    "theme": "dark"
+  },
+  // 插件源码地址
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shanalikhan/code-settings-sync.git"
+  },
+  // 插件bug反馈地址
+  "bugs": {
+    "url": "https://github.com/shanalikhan/code-settings-sync/issues",
+    "email": "shanalikhan@hotmail.com"
+  },
+  // 本插件最低运行脚本
+  "engines": {
+    "vscode": "^0.10.9"
+  },
+  // 本插件在市场中的分类，可多选[Languages, Snippets, Linters, Themes, Debuggers, Other]
+  "categories": [
+    "Other"
+  ],
+  // 插件激活命令
+  "activationEvents": [
+    "onCommand:extension.updateSettings",
+    "onCommand:extension.downloadSettings",
+    "onCommand:extension.resetSettings"
+  ],
+  // 插件入口main
+  "main": "./out/src/extension",
+  // command就是执行的命令，对应着回调函数
+  "contributes": {
+    // 命令列表，这些显示在命令面板中，可以通过title触发command
+    "commands": [
+      {
+        "command": "extension.downloadSettings",
+        "title": "Sync : Download Settings"
+      },
+      {
+        "command": "extension.updateSettings",
+        "title": "Sync : Update / Upload Settings"
+      },
+      {
+        "command": "extension.resetSettings",
+        "title": "Sync : Reset Sync Settings"
+      }
+    ],
+    // 快捷键绑定，快捷键触发command，when表示快捷键的响应限制环境
+    "keybindings": [
+      {
+        "key": "alt+shift+u",
+        "command": "extension.updateSettings",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "alt+shift+d",
+        "command": "extension.downloadSettings",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  // 插件构建脚本
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  // 开发依赖版本
+  "devDependencies": {
+    "typescript": "^1.6.2",
+    "vscode": "^0.11.x"
+  },
+  // 运行时依赖版本
+  "dependencies": {
+    "fs": "^0.0.2",
+    "github": "^0.2.4",
+    "open": "^0.0.5",
+    "temp": "^0.8.3",
+    "adm-zip": "^0.4.7",
+    "ncp": "^2.0.0"
+  }
+}

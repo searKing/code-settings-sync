@@ -1,0 +1,14 @@
+{
+    // TScript 编译选项
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "outDir": "out",
+        "noLib": true,
+        "sourceMap": true
+    },
+    // 编译忽略目录
+    "exclude": [
+        "node_modules"
+    ]
+}
