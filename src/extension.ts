@@ -3,6 +3,7 @@
 
 
 
+// 加载ts脚本
 import * as vscode from 'vscode';
 import * as pluginService from './pluginService';
 
@@ -17,13 +18,14 @@ import {Setting} from './setting';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
+// 当本插件第一次被加载时调用该函数，相当于C的main()函数
+// packages.json main --> ./out/src/extension 
 export function activate(context: vscode.ExtensionContext) {
 
     
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     
-
     var openurl = require('open');
     var fs = require('fs');
     var GitHubApi = require("github");
@@ -31,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     var github = new GitHubApi({
         version: "3.0.0"
     });
-
+    // 为packages.json中的command设置异步回调函数
     var disposable = vscode.commands.registerCommand('extension.updateSettings', async () => {
         var en: envir.Environment = new envir.Environment(context);
         var common: commons.Commons = new commons.Commons(en);
