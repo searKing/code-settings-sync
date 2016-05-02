@@ -31,6 +31,7 @@ export class Environment {
     // ~/.config/Code/User/snippets/
     public FOLDER_SNIPPETS: string = null;
     // ~/.config/Code/User/syncSettings.json
+    // 保存vsc配置在Git远程同步信息，Gist + Token
     public APP_SETTINGS : string = null;
 
     constructor(context: vscode.ExtensionContext) {

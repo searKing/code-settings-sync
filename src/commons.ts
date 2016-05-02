@@ -11,7 +11,7 @@ export class Commons {
     constructor(private en: envi.Environment) {
 
     }
-    // 初始化设置参数
+    // 初始化设置参数--从本地读取并保存配置文件信息
     public async InitSettings(): Promise<Setting> {
 
         var me = this;
@@ -19,9 +19,10 @@ export class Commons {
         setting.Migrated = false;
 
         return new Promise<Setting>(async (resolve, reject) => {
-
+            // 解析配置文件json
             await fManager.FileManager.FileExists(me.en.APP_SETTINGS).then(async function(fileExist: boolean) {
                 if (fileExist) {
+                    // 读取并解析配置文件
                     await fManager.FileManager.ReadFile(me.en.APP_SETTINGS).then(function(settin: string) {
                         var set: Setting = JSON.parse(settin);
                         resolve(set);
@@ -30,6 +31,7 @@ export class Commons {
                     });
                 }
                 else {
+                    // 本地没有配置文件，看一下是否是老版本的插件，老版本gist和token单独存储
                     var openurl = require('open');
 
                     var oldToken = null;
@@ -81,10 +83,12 @@ export class Commons {
                     //     reject(err);
                     // });
 
+                    // 保存gist、token等远程同步文件
                     setting.Gist = oldGist;
                     setting.Token = oldToken;
                     setting.Migrated = true;
-
+                    
+                    // 保存配置文件
                     await me.SaveSettings(setting).then(async function(added: boolean) {
                         if (added) {
                             await fManager.FileManager.DeleteFile(me.en.FILE_TOKEN).then(function(deleted: boolean) {
@@ -110,7 +114,8 @@ export class Commons {
 
         });
     }
-
+    
+    // 保存配置文件对象的Json至本地
     public async SaveSettings(setting: Setting): Promise<boolean> {
         var me = this;
         return new Promise<boolean>(async (resolve, reject) => {
@@ -122,7 +127,8 @@ export class Commons {
         });
 
     }
-
+    
+    // 从本地加载配置文件
     public async GetSettings(): Promise<Object> {
         var me = this;
         return new Promise<Object>(async (resolve, reject) => {
@@ -211,7 +217,8 @@ export class Commons {
         var me = this;
         var opt = Commons.GetInputBox(true);
         return new Promise<boolean>((resolve, reject) => {
-
+            
+            // 弹出窗口获取参数
             vscode.window.showInputBox(opt).then(async (token) => {
                 token = token.trim();
                 if (token) {
@@ -250,7 +257,7 @@ export class Commons {
         });
     }
 
-
+    // token or gist input
     public static GetInputBox(token: boolean) {
 
         if (token) {

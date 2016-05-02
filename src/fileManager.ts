@@ -29,7 +29,7 @@ export class FileManager {
     // await 可以等待一个 Promise 对象 resolve，并拿到结果。
     // 声明一个异步函数，返回Promise对象
     // resolve、reject是Promise接口的回调函数，这些回调函数，均是Promise接口需要实现的，一般thenable实现
-    
+    // 这些回调函数，实际上就是then接口用于传递给下一级使用的
     // 从文件中读入内容，并调用resolve回调返回读出的数据data
     public static async ReadFile(filePath: string): Promise<string> {
         return new Promise<string>(async(resolve, reject) => {
